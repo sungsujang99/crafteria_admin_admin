@@ -17,7 +17,7 @@ const Users = () => {
     const fetchUsers = async () => {
         try {
             const res = await urlAxios.get("/api/v1/users");
-            setUsers(res.data);
+            setUsers(res.data.data);
         } catch (e) {
             console.log(e);
         }
@@ -30,9 +30,14 @@ const Users = () => {
     const handleBanUser = async (id: string) => {
         const confirm = window.confirm("정말 이 회원을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.");
         if (!confirm) return;
+        const today = new Date();
+        const nextYear = new Date(today);
+        nextYear.setFullYear(today.getFullYear() + 1);
 
+        const nextYearISOString = nextYear.toISOString();
         try {
-            const res = await urlAxios.post(`/api/v1/users/${id}/ban?until=${"2028-01-01"}`);
+            const res = await urlAxios.post(`/api/v1/users/${id}/ban?until=${nextYearISOString}`, null, { headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` } });
+            console.log(res.data);
             fetchUsers;
         } catch (e) {
             console.log(e);
