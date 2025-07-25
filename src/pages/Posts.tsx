@@ -48,7 +48,7 @@ const Posts = () => {
     const handleDelete = async (id: string) => {
         if (window.confirm("이 3D 모델을 삭제하시겠습니까? 불법 또는 부적절한 콘텐츠인 경우 삭제해주세요.")) {
             try {
-                const res = await urlAxios.delete(`/api/v1/model/author/delete/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` } });
+                const res = await urlAxios.delete(`/api/v1/model/author/admin/delete/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` } });
                 console.log(res.data);
                 fetchPosts();
             } catch (error) {

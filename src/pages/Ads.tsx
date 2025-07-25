@@ -72,10 +72,11 @@ const Ads = () => {
         try {
             const formData = new FormData();
             formData.append("imageFile", selectedFile);
-            formData.append("title", newAdForm.name);
-            formData.append("linkUrl", newAdForm.linkUrl);
 
-            await urlAxios.post("/api/v1/advertisement-images", formData, {
+            const url = `/api/v1/advertisement-images?title=${newAdForm.name}&linkurl=${newAdForm.linkUrl}`;
+            console.log(url);
+
+            await urlAxios.post(url, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -151,7 +152,7 @@ const Ads = () => {
 
                     <div className="form-group">
                         <label>링크 URL</label>
-                        <input type="url" name="linkUrl" value={newAdForm.linkUrl} onChange={handleFormChange} placeholder="https://example.com" />
+                        <input type="url" name="linkUrl" value={newAdForm.linkUrl} onChange={handleFormChange} placeholder="https://www.example.com" />
                     </div>
 
                     <button className="upload-button" onClick={handleAdUpload}>
